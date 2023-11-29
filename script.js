@@ -22,7 +22,7 @@ document.addEventListener('keydown', (e) => {
   if (noteDetail == null) return;
 
   noteDetail.active = true;
-  playNote();
+  playNotes();
 });
 
 document.addEventListener('keyup', (e) => {
@@ -32,13 +32,23 @@ document.addEventListener('keyup', (e) => {
   if (noteDetail == null) return;
 
   noteDetail.active = false;
-  playNote();
+  playNotes();
 });
 
 function getNoteDetail(keyboardKey) {
   return NOTE_DETAILS.find((n) => `Key${n.key}` === keyboardKey);
 }
 
-function playNote() {
-  console.log('play note');
+function playNotes() {
+  NOTE_DETAILS.forEach((n) => {
+    const keyElement = document.querySelector(`[data-note="${n.note}"]`);
+    keyElement.classList.toggle('active', n.active || false);
+  });
+
+  const activeNotes = NOTE_DETAILS.filter((n) => n.active);
+  activeNotes.forEach((n) => {
+    startNote(n);
+  });
 }
+
+function startNote(noteDetail) {}
