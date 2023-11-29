@@ -12,3 +12,33 @@ const NOTE_DETAILS = [
   { note: 'Bb', key: 'J', frequency: 466.164 },
   { note: 'B', key: 'M', frequency: 493.883 },
 ];
+
+document.addEventListener('keydown', (e) => {
+  if (e.repeat) return;
+
+  const keyCode = e.code;
+  const noteDetail = getNoteDetail(keyCode);
+
+  if (noteDetail == null) return;
+
+  noteDetail.active = true;
+  playNote();
+});
+
+document.addEventListener('keyup', (e) => {
+  const keyCode = e.code;
+  const noteDetail = getNoteDetail(keyCode);
+
+  if (noteDetail == null) return;
+
+  noteDetail.active = false;
+  playNote();
+});
+
+function getNoteDetail(keyboardKey) {
+  return NOTE_DETAILS.find((n) => `Key${n.key}` === keyboardKey);
+}
+
+function playNote() {
+  console.log('play note');
+}
